@@ -45,7 +45,6 @@ pub struct Selector {
     pubkeys: HashSet<[u8; 32]>,
     mints: HashSet<Pubkey>,
     startup: Option<bool>,
-    token_reg: Heuristic<Option<HashSet<Pubkey>>>,
 }
 
 impl Selector {
@@ -85,43 +84,18 @@ impl Selector {
             pubkeys,
             mints,
             startup,
-            token_reg: Heuristic::Used(if all_tokens {
-                None
-            } else {
-                Some(HashSet::new())
-            }),
         };
 
-        // Don't screen tokens if we're never going to return them
-        if !ret.owners.contains(spl_token::id().as_ref()) {
-            ret.token_reg = Heuristic::Unused;
-        }
 
         Ok(ret)
     }
 
-    /// Lazy-load the token addresses
-    ///
-    /// # Panics
-    /// This method panics if token addresses are not wanted or if they have
-    /// already been loaded
-    pub fn init_token_registry(&mut self, addrs: HashSet<Pubkey>) {
-        assert!(self.token_reg.get().as_ref().unwrap().is_empty());
-        *self.token_reg.get_mut() = Some(addrs);
-    }
 
     /// Returns the startup-based selector configuration
     #[inline]
     #[must_use]
     pub fn startup(&self) -> StartupType {
         StartupType::new(self.startup)
-    }
-
-    /// Returns whether tokens from the Solana token registry should be loaded
-    /// for exclusion
-    #[inline]
-    pub fn screen_token_registry(&self) -> bool {
-        self.token_reg.try_get().map_or(false, Option::is_some)
     }
 
     /// Returns true if the given account associated with the given startup flag
@@ -153,16 +127,6 @@ impl Selector {
         }
 
         if !self.owners.contains(owner) {
-            return false;
-        }
-
-        let maybe_not_nft = self.token_reg.get().as_ref().and_then(|reg| {
-            let token = token.as_ref()?;
-
-            Some(token.amount > 1 || reg.contains(&token.mint))
-        });
-
-        if maybe_not_nft.unwrap_or(false) {
             return false;
         }
 

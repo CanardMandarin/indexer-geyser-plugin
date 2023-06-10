@@ -23,7 +23,6 @@ pub trait InstructionInfo<'a>: 'a {
 #[derive(Debug)]
 pub struct Selector {
     programs: HashSet<Pubkey>,
-    screen_tokens: Heuristic<bool>,
 }
 
 impl Selector {
@@ -45,13 +44,8 @@ impl Selector {
 
         let mut ret = Self {
             programs,
-            screen_tokens: Heuristic::Used(!all_token_calls),
         };
 
-        // Don't screen token calls if we're never going to return them
-        if !ret.programs.contains(&spl_token::id()) {
-            ret.screen_tokens = Heuristic::Unused;
-        }
 
         Ok(ret)
     }
@@ -79,24 +73,6 @@ impl Selector {
         let pgm = get_acct(pgm).ok_or(Error::InstructionMissingAccount(pgm))?;
         if !self.programs.contains(pgm) {
             return Ok(false);
-        }
-
-        if self.screen_tokens.into_inner() && *pgm == spl_token::id() {
-            let data = ins.data();
-            if let [8, rest @ ..] = data {
-                let amt = rest.try_into().map(u64::from_le_bytes);
-
-                if !matches!(amt, Ok(1)) {
-                    return Ok(false);
-                }
-
-                debug_assert_eq!(
-                    data,
-                    spl_token::instruction::TokenInstruction::Burn { amount: 1_u64 }.pack(),
-                );
-            } else {
-                return Ok(false);
-            }
         }
 
         Ok(true)

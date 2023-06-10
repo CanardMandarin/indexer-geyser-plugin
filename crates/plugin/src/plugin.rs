@@ -254,13 +254,6 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
             .await
             .map_err(custom_err(&metrics.errs))?;
 
-            if acct_sel.screen_token_registry() {
-                acct_sel.init_token_registry(
-                    Self::load_token_reg()
-                        .await
-                        .map_err(custom_err(&metrics.errs))?,
-                );
-            }
 
             Result::<_>::Ok(producer)
         })?;
