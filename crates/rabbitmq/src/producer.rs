@@ -44,9 +44,12 @@ where
     pub async fn write(&self, val: impl std::borrow::Borrow<Q::Message>) -> Result<()> {
         let val = val.borrow();
 
-        let mut vec = Vec::new();
-        serialize(&mut vec, val)?;
+        // let mut vec = Vec::new();
+        // serialize(&mut vec, val)?;
 
+        let vec = serde_json::to_vec(val).unwrap();
+
+        
         self.ty.info().publish(&self.chan, &vec).await?.await?;
 
         Ok(())
