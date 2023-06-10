@@ -23,7 +23,6 @@ pub trait InstructionInfo<'a>: 'a {
 #[derive(Debug)]
 pub struct Selector {
     programs: HashSet<Pubkey>,
-    screen_tokens: Heuristic<bool>,
 }
 
 impl Selector {
@@ -45,13 +44,8 @@ impl Selector {
 
         let mut ret = Self {
             programs,
-            screen_tokens: Heuristic::Used(!all_token_calls),
         };
 
-        // Don't screen token calls if we're never going to return them
-        if !ret.programs.contains(&spl_token::id()) {
-            ret.screen_tokens = Heuristic::Unused;
-        }
 
         Ok(ret)
     }
