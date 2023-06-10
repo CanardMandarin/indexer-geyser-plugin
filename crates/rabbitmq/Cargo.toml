@@ -20,7 +20,7 @@ geyser = ["solana-program", "suffix"]
 http-indexer = ["solana-program", "suffix"]
 job-runner = ["geyser", "suffix"]
 producer = ["suffix"]
-search-indexer = ["serde_json", "solana-program", "suffix"]
+search-indexer = ["solana-program", "suffix"]
 suffix = []
 
 [dependencies]
