@@ -362,7 +362,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                                 data,
                                 write_version,
                                 txn: Some(_)
-                            }
+                            };
                         };
 
                         AccountUpdate {
