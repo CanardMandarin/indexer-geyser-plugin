@@ -20,7 +20,7 @@ use crate::{
     },
     metrics::{Counter, Metrics},
     prelude::*,
-    selector::{AccountShim, AccountShimV2, CompiledInstructionShim},
+    selector::{AccountShim, AccountShimV2, AccountShimV3, CompiledInstructionShim},
     sender::Sender,
 };
 
