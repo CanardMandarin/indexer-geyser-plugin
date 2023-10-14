@@ -351,7 +351,6 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                             rent_epoch,
                             data,
                             write_version,
-                            txn: Some(_),
                         } = *acct;
 
                         AccountUpdate {
