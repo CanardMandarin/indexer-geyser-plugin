@@ -1,7 +1,7 @@
 use hashbrown::HashSet;
 use solana_program::pubkey::Pubkey;
 
-use crate::{config::Instructions, Error, Heuristic, Result};
+use crate::{config::Instructions, Error, Result};
 
 /// Abstraction over a Solana instruction container
 #[allow(clippy::module_name_repetitions)]
@@ -42,7 +42,7 @@ impl Selector {
             .collect::<Result<_, _>>()
             .map_err(|e| Error::InstructionConfig("programs", e.into()))?;
 
-        let mut ret = Self {
+        let ret = Self {
             programs,
         };
 

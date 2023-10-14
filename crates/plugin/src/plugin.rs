@@ -220,7 +220,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                 .map_err(custom_err(&metrics.errs))?;
         }
 
-        let (amqp, jobs, metrics_conf, mut acct_sel, ins_sel) = Config::read(cfg)
+        let (amqp, jobs, metrics_conf, acct_sel, ins_sel) = Config::read(cfg)
             .and_then(Config::into_parts)
             .map_err(custom_err(&metrics.errs))?;
 

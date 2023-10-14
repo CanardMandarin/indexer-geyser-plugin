@@ -2,7 +2,7 @@
 
 use lapin::{Channel, Connection};
 
-use crate::{serialize::serialize, QueueType, Result};
+use crate::{QueueType, Result};
 
 /// A producer consisting of a configured channel and additional queue config
 #[derive(Debug)]

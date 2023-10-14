@@ -3,7 +3,7 @@ use indexer_rabbitmq::geyser::StartupType;
 use solana_program::{program_pack::Pack, pubkey::Pubkey};
 use spl_token::state::Account as TokenAccount;
 
-use crate::{config::Accounts, Error, Heuristic, Result};
+use crate::{config::Accounts, Error, Result};
 
 /// Abstraction over a Solana account container
 #[allow(clippy::module_name_repetitions)]
@@ -55,7 +55,7 @@ impl Selector {
     pub fn from_config(config: Accounts) -> Result<Self> {
         let Accounts {
             owners,
-            all_tokens,
+            all_tokens: _,
             pubkeys,
             mints,
             startup,
@@ -79,7 +79,7 @@ impl Selector {
             .collect::<Result<_, _>>()
             .map_err(|e| Error::AccountConfig("pubkeys", e.into()))?;
 
-        let mut ret = Self {
+        let ret = Self {
             owners,
             pubkeys,
             mints,

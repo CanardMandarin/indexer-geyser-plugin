@@ -43,38 +43,38 @@ pub enum Error {
 
 pub(crate) type Result<T, E = Error> = std::result::Result<T, E>;
 
-#[derive(Debug, Clone, Copy)]
-pub(crate) enum Heuristic<T> {
-    Used(T),
-    Unused,
-}
+// #[derive(Debug, Clone, Copy)]
+// pub(crate) enum Heuristic<T> {
+//     Used(T),
+//     Unused,
+// }
 
-impl<T> Heuristic<T> {
-    fn try_get(&self) -> Option<&T> {
-        match self {
-            Self::Used(v) => Some(v),
-            Self::Unused => None,
-        }
-    }
+// impl<T> Heuristic<T> {
+//     fn try_get(&self) -> Option<&T> {
+//         match self {
+//             Self::Used(v) => Some(v),
+//             Self::Unused => None,
+//         }
+//     }
 
-    fn get(&self) -> &T {
-        match self {
-            Self::Used(v) => v,
-            Self::Unused => panic!("Attempted to use heuristic marked as unused"),
-        }
-    }
+//     fn get(&self) -> &T {
+//         match self {
+//             Self::Used(v) => v,
+//             Self::Unused => panic!("Attempted to use heuristic marked as unused"),
+//         }
+//     }
 
-    fn get_mut(&mut self) -> &mut T {
-        match self {
-            Self::Used(v) => v,
-            Self::Unused => panic!("Attempted to use heuristic marked as unused"),
-        }
-    }
+//     fn get_mut(&mut self) -> &mut T {
+//         match self {
+//             Self::Used(v) => v,
+//             Self::Unused => panic!("Attempted to use heuristic marked as unused"),
+//         }
+//     }
 
-    fn into_inner(self) -> T {
-        match self {
-            Self::Used(v) => v,
-            Self::Unused => panic!("Attempted to use heuristic marked as unused"),
-        }
-    }
-}
+//     fn into_inner(self) -> T {
+//         match self {
+//             Self::Used(v) => v,
+//             Self::Unused => panic!("Attempted to use heuristic marked as unused"),
+//         }
+//     }
+// }

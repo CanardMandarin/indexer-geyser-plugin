@@ -7,17 +7,17 @@ use std::io::Write;
 ///
 /// # Errors
 /// This function fails if an I/O error occurs or a wire format error occurs.
-#[cfg(feature = "producer")]
-pub fn serialize<M: serde::Serialize>(
-    w: impl Write,
-    msg: &M,
-) -> Result<(), rmp_serde::encode::Error> {
-    let mut ser = rmp_serde::Serializer::new(w)
-        .with_binary()
-        .with_struct_map();
+// #[cfg(feature = "producer")]
+// pub fn serialize<M: serde::Serialize>(
+//     w: impl Write,
+//     msg: &M,
+// ) -> Result<(), rmp_serde::encode::Error> {
+//     let mut ser = rmp_serde::Serializer::new(w)
+//         .with_binary()
+//         .with_struct_map();
 
-    msg.serialize(&mut ser)
-}
+//     msg.serialize(&mut ser)
+// }
 
 /// Deserialize a message from a [`Read`] stream
 ///
