@@ -270,7 +270,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
     }
 
     fn update_account(
-        &mut self,
+        &self,
         account: ReplicaAccountInfoVersions,
         slot: u64,
         is_startup: bool,
@@ -352,7 +352,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
     }
 
     fn update_slot_status(
-        &mut self,
+        &self,
         slot: u64,
         parent: Option<u64>,
         status: SlotStatus,
@@ -385,7 +385,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
     }
 
     fn notify_transaction(
-        &mut self,
+        &self,
         transaction: ReplicaTransactionInfoVersions,
         slot: u64,
     ) -> Result<()> {
