@@ -349,7 +349,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                             owner: Pubkey::new_from_array(acct.owner.try_into()?),
                             executable: acct.executable,
                             rent_epoch: acct.rent_epoch,
-                            data: data.to_owned(),
+                            data: acct.data.to_owned(),
                             write_version: acct.write_version,
                             slot,
                             is_startup,
