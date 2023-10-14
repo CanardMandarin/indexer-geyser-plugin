@@ -351,8 +351,8 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                             rent_epoch: acct.rent_epoch,
                             data: data.to_owned(),
                             write_version: acct.write_version,
-                            slot: acct.slot,
-                            is_startup: acct.is_startup,
+                            slot,
+                            is_startup,
                         }
                     },
                 };
