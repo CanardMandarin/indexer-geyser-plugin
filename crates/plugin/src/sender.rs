@@ -28,7 +28,7 @@ impl Sender {
         startup_type: StartupType,
         metrics: Arc<Metrics>,
     ) -> Result<Self, indexer_rabbitmq::Error> {
-        let producer = Self::create_producer(&amqp, name, startup_type).await?;
+        let producer = Self::create_producer(&amqp, name.clone(), startup_type).await?;
 
         Ok(Self {
             amqp,
