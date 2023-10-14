@@ -339,7 +339,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                     },
 
                     ReplicaAccountInfoVersions::V0_0_3(acct) => {
-                        if !this.acct_sel.is_selected(&AccountShimV2(acct), is_startup) {
+                        if !this.acct_sel.is_selected(&AccountShimV3(acct), is_startup) {
                             return Ok(());
                         }
 
@@ -351,7 +351,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                             rent_epoch,
                             data,
                             write_version,
-                            txn_signature: _, // TODO: send this?
+                            txn: None, // TODO: send this?
                         } = *acct;
 
                         AccountUpdate {
