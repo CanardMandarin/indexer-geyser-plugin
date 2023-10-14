@@ -15,7 +15,7 @@ use serde::Deserialize;
 use crate::{
     config::Config,
     interface::{
-        GeyserPlugin, GeyserPluginError, ReplicaAccountInfo, ReplicaAccountInfoV2,
+        GeyserPlugin, GeyserPluginError, ReplicaAccountInfo, ReplicaAccountInfoV2, ReplicaAccountInfoV3,
         ReplicaAccountInfoVersions, ReplicaTransactionInfoVersions, Result,
     },
     metrics::{Counter, Metrics},
@@ -315,6 +315,35 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                         }
 
                         let ReplicaAccountInfoV2 {
+                            pubkey,
+                            lamports,
+                            owner,
+                            executable,
+                            rent_epoch,
+                            data,
+                            write_version,
+                            txn_signature: _, // TODO: send this?
+                        } = *acct;
+
+                        AccountUpdate {
+                            key: Pubkey::new_from_array(pubkey.try_into()?),
+                            lamports,
+                            owner: Pubkey::new_from_array(owner.try_into()?),
+                            executable,
+                            rent_epoch,
+                            data: data.to_owned(),
+                            write_version,
+                            slot,
+                            is_startup,
+                        }
+                    },
+
+                    ReplicaAccountInfoVersions::V0_0_3(acct) => {
+                        if !this.acct_sel.is_selected(&AccountShimV2(acct), is_startup) {
+                            return Ok(());
+                        }
+
+                        let ReplicaAccountInfoV3 {
                             pubkey,
                             lamports,
                             owner,

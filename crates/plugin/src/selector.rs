@@ -1,4 +1,4 @@
-use crate::interface::{ReplicaAccountInfo, ReplicaAccountInfoV2};
+use crate::interface::{ReplicaAccountInfo, ReplicaAccountInfoV2, ReplicaAccountInfoV3};
 use selector::prelude::*;
 use solana_program::instruction::CompiledInstruction;
 
@@ -41,6 +41,29 @@ impl<'a> AccountInfo for AccountShimV2<'a> {
         self.0.data
     }
 }
+
+
+
+#[repr(transparent)]
+pub struct AccountShimV3<'a>(pub &'a ReplicaAccountInfoV3<'a>);
+
+impl<'a> AccountInfo for AccountShimV3<'a> {
+    #[inline]
+    fn owner(&self) -> &[u8] {
+        self.0.owner
+    }
+
+    #[inline]
+    fn pubkey(&self) -> &[u8] {
+        self.0.pubkey
+    }
+
+    #[inline]
+    fn data(&self) -> &[u8] {
+        self.0.data
+    }
+}
+
 
 #[repr(transparent)]
 pub struct CompiledInstructionShim<'a>(pub &'a CompiledInstruction);
