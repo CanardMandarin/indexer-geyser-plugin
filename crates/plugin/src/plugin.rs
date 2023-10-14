@@ -352,7 +352,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                             data,
                             write_version,
                             txn: Some(_)
-                        } = *acct else {
+                        } = *acct else 
                             let ReplicaAccountInfoV3 {
                                 pubkey,
                                 lamports,
@@ -363,7 +363,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                                 write_version,
                                 txn: Some(_)
                             };
-                        };
+                       
 
                         AccountUpdate {
                             key: Pubkey::new_from_array(pubkey.try_into()?),
