@@ -9,7 +9,7 @@ use indexer_rabbitmq::geyser::{
 use selector::{AccountSelector, InstructionSelector};
 use solana_geyser_plugin_interface::geyser_plugin_interface::SlotStatus;
 use solana_program::{instruction::CompiledInstruction, message::AccountKeys};
-use solana_transaction_status::InnerInstructions;
+use solana_transaction_status::InnerInstruction;
 use serde::Deserialize;
 
 use crate::{
