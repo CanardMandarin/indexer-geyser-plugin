@@ -342,39 +342,17 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                         if !this.acct_sel.is_selected(&AccountShimV3(acct), is_startup) {
                             return Ok(());
                         }
-
-                        let ReplicaAccountInfoV3 {
-                            pubkey,
-                            lamports,
-                            owner,
-                            executable,
-                            rent_epoch,
-                            data,
-                            write_version,
-                            txn: Some(_)
-                        } = *acct else 
-                            let ReplicaAccountInfoV3 {
-                                pubkey,
-                                lamports,
-                                owner,
-                                executable,
-                                rent_epoch,
-                                data,
-                                write_version,
-                                txn: Some(_)
-                            };
-                       
-
+   
                         AccountUpdate {
-                            key: Pubkey::new_from_array(pubkey.try_into()?),
-                            lamports,
-                            owner: Pubkey::new_from_array(owner.try_into()?),
-                            executable,
-                            rent_epoch,
+                            key: Pubkey::new_from_array(acct.pubkey.try_into()?),
+                            lamports: acct.lamports,
+                            owner: Pubkey::new_from_array(acct.owner.try_into()?),
+                            executable: acct.executable,
+                            rent_epoch: acct.rent_epoch,
                             data: data.to_owned(),
-                            write_version,
-                            slot,
-                            is_startup,
+                            write_version: acct.write_version,
+                            slot: acct.slot,
+                            is_startup: acct.is_startup,
                         }
                     },
                 };
