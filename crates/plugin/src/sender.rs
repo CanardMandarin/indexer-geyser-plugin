@@ -28,7 +28,7 @@ impl Sender {
         startup_type: StartupType,
         metrics: Arc<Metrics>,
     ) -> Result<Self, indexer_rabbitmq::Error> {
-        let producer = Self::create_producer(&amqp, &name, startup_type).await?;
+        let producer = Self::create_producer(&amqp, name, startup_type).await?;
 
         Ok(Self {
             amqp,
@@ -41,13 +41,13 @@ impl Sender {
 
     async fn create_producer(
         amqp: &config::Amqp,
-        name: &String,
+        name: impl Into<indexer_rabbitmq::lapin::types::LongString>,
         startup_type: StartupType,
     ) -> Result<Producer, indexer_rabbitmq::Error> {
         let conn = Connection::connect(
             &amqp.address,
             ConnectionProperties::default()
-                .with_connection_name(name.as_bytes().to_vec())
+                .with_connection_name(name.into())
                 .with_executor(tokio_executor_trait::Tokio::current())
                 .with_reactor(tokio_reactor_trait::Tokio),
         )
