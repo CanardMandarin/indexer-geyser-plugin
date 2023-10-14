@@ -47,7 +47,7 @@ impl Sender {
         let conn = Connection::connect(
             &amqp.address,
             ConnectionProperties::default()
-                .with_connection_name(name.into())
+                .with_connection_name(name.as_bytes().to_vec())
                 .with_executor(tokio_executor_trait::Tokio::current())
                 .with_reactor(tokio_reactor_trait::Tokio),
         )
