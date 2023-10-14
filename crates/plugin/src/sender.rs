@@ -69,7 +69,7 @@ impl Sender {
         std::mem::drop(prod);
         let mut prod = self.producer.write().await;
 
-        *prod = Self::create_producer(&self.amqp, self.name.as_ref(), self.startup_type).await?;
+        *prod = Self::create_producer(&self.amqp, self.name.clone(), self.startup_type).await?;
 
         Ok(prod.downgrade())
     }
