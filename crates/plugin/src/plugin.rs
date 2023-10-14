@@ -418,7 +418,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                                         .flatten()
                                         .flat_map(|ins| {
                                             ins.instructions.iter().enumerate().map(|(i, inner)| {
-                                                (InstructionIndex::Inner(ins.index, i), inner.instruction)
+                                                (InstructionIndex::Inner(ins.index, i), &inner.instruction)
                                             })
                                         }),
                                 ),
@@ -448,7 +448,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                                         .flatten()
                                         .flat_map(|ins| {
                                             ins.instructions.iter().enumerate().map(|(i, inner)| {
-                                                (InstructionIndex::Inner(ins.index, i), inner.instruction)
+                                                (InstructionIndex::Inner(ins.index, i), &inner.instruction)
                                             })
                                         }),
                                 ),
