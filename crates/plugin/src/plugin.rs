@@ -9,7 +9,7 @@ use indexer_rabbitmq::geyser::{
 use selector::{AccountSelector, InstructionSelector};
 use solana_geyser_plugin_interface::geyser_plugin_interface::SlotStatus;
 use solana_program::{instruction::CompiledInstruction, message::AccountKeys};
-use solana_transaction_status::InnerInstruction;
+
 use serde::Deserialize;
 
 use crate::{
@@ -55,7 +55,7 @@ impl Inner {
 
     fn process_instructions<'a>(
         self: &Arc<Self>,
-        instructions: impl IntoIterator<Item = (InstructionIndex, &'a InnerInstruction)>,
+        instructions: impl IntoIterator<Item = (InstructionIndex, &'a CompiledInstruction)>,
         keys: &AccountKeys,
         slot: u64,
         txn_signature: &[u8],
@@ -63,7 +63,7 @@ impl Inner {
         #[inline]
         fn process_instruction(
             sel: &InstructionSelector,
-            (index, ins): (InstructionIndex, &InnerInstruction),
+            (index, ins): (InstructionIndex, &CompiledInstruction),
             keys: &AccountKeys,
             slot: u64,
             txn_signature: &[u8],
@@ -418,7 +418,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                                         .flatten()
                                         .flat_map(|ins| {
                                             ins.instructions.iter().enumerate().map(|(i, inner)| {
-                                                (InstructionIndex::Inner(ins.index, i), inner)
+                                                (InstructionIndex::Inner(ins.index, i), inner.instruction)
                                             })
                                         }),
                                 ),
@@ -448,7 +448,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                                         .flatten()
                                         .flat_map(|ins| {
                                             ins.instructions.iter().enumerate().map(|(i, inner)| {
-                                                (InstructionIndex::Inner(ins.index, i), inner)
+                                                (InstructionIndex::Inner(ins.index, i), inner.instruction)
                                             })
                                         }),
                                 ),
