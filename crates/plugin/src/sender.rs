@@ -41,7 +41,7 @@ impl Sender {
 
     async fn create_producer(
         amqp: &config::Amqp,
-        name: impl Into<indexer_rabbitmq::lapin::types::LongString>,
+        name: String,
         startup_type: StartupType,
     ) -> Result<Producer, indexer_rabbitmq::Error> {
         let conn = Connection::connect(
