@@ -351,7 +351,19 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
                             rent_epoch,
                             data,
                             write_version,
-                        } = *acct;
+                            txn: Some(_)
+                        } = *acct else {
+                            let ReplicaAccountInfoV3 {
+                                pubkey,
+                                lamports,
+                                owner,
+                                executable,
+                                rent_epoch,
+                                data,
+                                write_version,
+                                txn: Some(_)
+                            }
+                        };
 
                         AccountUpdate {
                             key: Pubkey::new_from_array(pubkey.try_into()?),
