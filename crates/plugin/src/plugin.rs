@@ -55,7 +55,7 @@ impl Inner {
 
     fn process_instructions<'a>(
         self: &Arc<Self>,
-        instructions: impl IntoIterator<Item = (InstructionIndex, &'a CompiledInstruction)>,
+        instructions: impl IntoIterator<Item = (InstructionIndex, &'a InnerInstruction)>,
         keys: &AccountKeys,
         slot: u64,
         txn_signature: &[u8],
@@ -63,7 +63,7 @@ impl Inner {
         #[inline]
         fn process_instruction(
             sel: &InstructionSelector,
-            (index, ins): (InstructionIndex, &CompiledInstruction),
+            (index, ins): (InstructionIndex, &InnerInstruction),
             keys: &AccountKeys,
             slot: u64,
             txn_signature: &[u8],
