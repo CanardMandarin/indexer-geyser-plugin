@@ -114,17 +114,17 @@ impl Selector {
             return true;
         }
 
-        let token = once_cell::unsync::Lazy::new(|| {
-            if owner == spl_token::id().as_ref() && data.len() == TokenAccount::get_packed_len() {
-                TokenAccount::unpack_from_slice(data).ok()
-            } else {
-                None
-            }
-        });
+        // let token = once_cell::unsync::Lazy::new(|| {
+        //     if owner == spl_token::id().as_ref() && data.len() == TokenAccount::get_packed_len() {
+        //         TokenAccount::unpack_from_slice(data).ok()
+        //     } else {
+        //         None
+        //     }
+        // });
 
-        if !self.mints.is_empty() && token.map_or(false, |t| self.mints.contains(&t.mint)) {
-            return true;
-        }
+        // if !self.mints.is_empty() && token.map_or(false, |t| self.mints.contains(&t.mint)) {
+        //     return true;
+        // }
 
         if !self.owners.contains(owner) {
             return false;

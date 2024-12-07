@@ -7,7 +7,7 @@ use indexer_rabbitmq::geyser::{
     SlotStatusUpdate,
 };
 use selector::{AccountSelector, InstructionSelector};
-use solana_geyser_plugin_interface::geyser_plugin_interface::SlotStatus;
+use agave_geyser_plugin_interface::geyser_plugin_interface::SlotStatus;
 use solana_program::{instruction::CompiledInstruction, message::AccountKeys};
 
 use serde::Deserialize;
@@ -180,7 +180,7 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
         "GeyserPluginRabbitMq"
     }
 
-    fn on_load(&mut self, cfg: &str) -> Result<()> {
+    fn on_load(&mut self, cfg: &str, _test: bool) -> Result<()> {
         solana_logger::setup_with_default("info");
 
         let metrics = Metrics::new_rc();
