@@ -226,15 +226,15 @@ impl GeyserPlugin for GeyserPluginRabbitMq {
 
         let startup_type = acct_sel.startup();
 
-        if let Some(config) = metrics_conf.config {
-            const VAR: &str = "SOLANA_METRICS_CONFIG";
+        // if let Some(config) = metrics_conf.config {
+        //     const VAR: &str = "SOLANA_METRICS_CONFIG";
 
-            if env::var_os(VAR).is_some() {
-                warn!("Overriding existing value for {}", VAR);
-            }
+        //     if env::var_os(VAR).is_some() {
+        //         warn!("Overriding existing value for {}", VAR);
+        //     }
 
-            env::set_var(VAR, config);
-        }
+        //     env::set_var(VAR, config);
+        // }
 
         let rt = tokio::runtime::Builder::new_multi_thread()
             .enable_all()
